@@ -11,11 +11,19 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   console.log("User connected!"),
-    socket.on("chat message", (msg) => {
-      console.log("Message: ", msg);
-      //broadcast
-      io.emit("chat message", msg);
-    });
+    // socket.on("chat message", (msg) => {
+    //   console.log("Message: ", msg);
+    //   //broadcast
+    //   io.emit("chat message", msg);
+    // });
+
+    socket.join("group1");
+  socket.emit("message", "you joined group 1");
+
+  socket.on("chat message", (msg) => {
+    console.log("Message: ", msg);
+    io.to("group1").emit("group message", msg);
+  });
 
   socket.on("disconnect", () => console.log("User disconnected!"));
 });

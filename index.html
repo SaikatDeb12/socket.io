@@ -23,10 +23,17 @@
         messages.appendChild(li);
       });
 
+      socket.on("group message", (msg) => {
+        const li = document.createElement("li");
+        li.textContent = "Group1: " + msg;
+        messages.appendChild(li);
+      });
+
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         if (input.value) {
-          socket.emit("chat message", input.value);
+          // socket.emit("chat message", input.value);
+          socket.emit("group message", input.value);
           input.value = "";
         }
       });
